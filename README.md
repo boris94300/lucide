@@ -48,6 +48,17 @@ uvicorn backend.app:app --reload --port 8000
 
 Les documents de démonstration sont dans `demo/` (regénérables : `python scripts/make_demos.py`).
 
+## Déployer en ligne (lien permanent, gratuit)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/boris94300/lucide)
+
+1. Créer un compte gratuit sur https://render.com (connexion avec GitHub).
+2. Cliquer sur le bouton ci-dessus (ou New → Blueprint → choisir ce repo) : Render lit `render.yaml` et construit le `Dockerfile`.
+3. Optionnel : renseigner `MISTRAL_API_KEY` pour activer l'IA (sinon moteur de règles).
+4. L'appli est disponible sur `https://lucide-xxxx.onrender.com`. En offre gratuite, elle se met en veille après 15 min sans visite : le premier chargement prend environ 1 min.
+
+Avec Docker : `docker build -t lucide . && docker run -p 8000:8000 lucide`
+
 ## API
 
 - `POST /api/analyze` (multipart : `file` | `text` | `demo`, `mode` = auto|contrat|arnaque, `level` = simple|normal|expert)

@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: lucide
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: MISTRAL_API_KEY
+        sync: false
