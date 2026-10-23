@@ -1,0 +1,11 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+pymupdf>=1.24
+opencv-python-headless>=4.9
+pillow>=10.0
+numpy>=1.26
+httpx>=0.27
+fpdf2>=2.7
+pytesseract>=0.3.10
+qrcode[pil]>=7.4
