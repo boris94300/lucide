@@ -1,0 +1,15 @@
+De : Service Sécurité BNP Paribas <securite@bnp-paribas-alerte.com>
+Objet : [URGENT] Activité inhabituelle détectée sur votre compte
+
+Cher(e) client(e),
+
+Nous avons détecté une tentative de connexion inhabituelle à votre espace client depuis un appareil situé à Kiev (Ukraine). Par mesure de sécurité, votre accès a été temporairement suspendu.
+
+Pour réactiver votre compte, veuillez confirmer votre identité sous 24h en cliquant sur le lien ci-dessous et en saisissant vos identifiants ainsi que le code reçu par SMS :
+
+https://bnp-paribas-securite-client.info/verification
+
+Sans action de votre part, votre compte sera définitivement clôturé.
+
+Cordialement,
+Le Service Sécurité Clients

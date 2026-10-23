@@ -90,3 +90,58 @@ qr = qrcode.make("https://colissimo-suivi-livraison.xyz/paiement?id=8R0423").res
 img.paste(qr, (210, y + 20))
 img.save(os.path.join(DEMO, "sms_colis_qr.png"))
 print("démos générées dans", DEMO)
+
+# ------------------------------------------------------------------ faux PDF : changement de RIB fournisseur
+EX = os.path.join(DEMO, "exemples")
+os.makedirs(EX, exist_ok=True)
+
+
+def letter(path, header, sub, body_lines, footer):
+    p = FPDF()
+    p.add_font("dj", "", os.path.join(FONTS, "DejaVuSans.ttf"))
+    p.add_font("dj", "B", os.path.join(FONTS, "DejaVuSans-Bold.ttf"))
+    p.add_page()
+    w = p.w - 2 * p.l_margin
+    p.set_fill_color(0, 51, 102)
+    p.rect(0, 0, p.w, 24, "F")
+    p.set_text_color(255, 255, 255)
+    p.set_font("dj", "B", 16)
+    p.set_xy(10, 6)
+    p.cell(0, 8, header)
+    p.set_font("dj", "", 9)
+    p.set_xy(10, 14)
+    p.cell(0, 6, sub)
+    p.set_text_color(0, 0, 0)
+    p.set_y(34)
+    for kind, txt in body_lines:
+        p.set_font("dj", "B" if kind == "b" else "", 11 if kind == "b" else 10)
+        p.multi_cell(w, 6, txt, new_x="LMARGIN", new_y="NEXT")
+        p.ln(2)
+    p.ln(6)
+    p.set_font("dj", "", 9)
+    p.set_text_color(90, 90, 90)
+    p.multi_cell(w, 5, footer, new_x="LMARGIN", new_y="NEXT")
+    p.output(path)
+
+
+letter(os.path.join(EX, "7_faux_pdf_changement_rib.pdf"), "LOGITRANS SERVICES", "Transport & logistique · Siège : 12 rue des Docks, 69007 Lyon",
+       [("n", "Lyon, le 22 octobre 2026"), ("n", "À l'attention du service comptabilité"),
+        ("b", "Objet : Changement de coordonnées bancaires – URGENT et CONFIDENTIEL"),
+        ("n", "Madame, Monsieur,"),
+        ("n", "Suite à un audit interne, notre banque a changé. Nous vous informons que nos coordonnées bancaires ont été modifiées. Merci d'utiliser dès aujourd'hui notre nouveau RIB pour le règlement de toutes les factures en attente, notamment la facture n° F-2026-0912 d'un montant de 18 450,00 €, à régler immédiatement."),
+        ("n", "Nouvel IBAN : LT12 3456 7890 1234 5678   BIC : LTBKLT2X   Banque : Baltic Trust Bank, Vilnius"),
+        ("n", "Pour des raisons de confidentialité liées à l'audit, merci de ne pas contacter nos services par téléphone et de traiter cette demande avec la plus grande discrétion. Toute question doit être adressée uniquement par email à : comptabilite@logitrans-services-fr.com"),
+        ("n", "Nous vous remercions de votre réactivité. Sans règlement sous 48h, des pénalités de retard seront appliquées."),
+        ("n", "Jean-Marc Lefèvre\nDirecteur administratif et financier")],
+       "LOGITRANS SERVICES SAS – Document fictif généré pour la démonstration Lucide.")
+
+letter(os.path.join(EX, "8_faux_pdf_avis_impots.pdf"), "DGFiP – impots.gouv", "Direction Générale des Finances Publiques · Service des remboursements",
+       [("n", "Paris, le 21 octobre 2026"), ("b", "AVIS DE REMBOURSEMENT – Dossier n° 2026-FR-48213"),
+        ("n", "Madame, Monsieur,"),
+        ("n", "Suite à une erreur de calcul sur votre déclaration de revenus, vous avez droit à un remboursement de 327,40 €."),
+        ("n", "Pour recevoir ce montant, vous devez valider votre dossier en ligne sous 48h en indiquant votre numéro de carte bancaire, sa date d'expiration et son cryptogramme :"),
+        ("b", "https://impots-gouv-remboursement.fr/dossier-48213"),
+        ("n", "Sans validation dans ce délai, votre remboursement sera définitivement annulé et une amende pourra être appliquée."),
+        ("n", "Le Directeur du service des remboursements")],
+       "Document fictif généré pour la démonstration Lucide.")
+print("exemples générés dans", EX)

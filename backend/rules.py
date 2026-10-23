@@ -293,7 +293,7 @@ SCAM_RULES = [
               "normal": "L'expéditeur se réclame d'un organisme connu : vérifiez via le site ou l'appli officiels, jamais via le lien reçu.",
               "expert": "Usurpation d'identité de marque (brand impersonation) : vérifier l'expéditeur, le domaine et l'alphanumeric sender ID."}),
     dict(id="rib", cat="Fraude au virement", w=30, title="Changement de RIB / IBAN",
-         pat=[r"nouve(au|l) (rib|iban)", r"changement de (rib|coordonnees bancaires|banque)", r"(rib|iban)[^.]{0,30}(a change|modifie|mis a jour)"],
+         pat=[r"nouve(au|l) (rib|iban)", r"(envoie|transmets|joins)[^.]{0,20}(le|mon|notre|un) (rib|iban)", r"changement de (rib|coordonnees bancaires|banque)", r"(rib|iban)[^.]{0,30}(a change|modifie|mis a jour)"],
          txt={"simple": "On te demande de payer sur un nouveau compte : c'est l'arnaque au faux RIB. Appelle la personne pour vérifier.",
               "normal": "Un changement de coordonnées bancaires est annoncé : vérifiez par un autre canal (téléphone connu).",
               "expert": "Fraude au changement de RIB (BEC) : contre-appel sur numéro de référence obligatoire avant tout virement."}),
@@ -365,7 +365,7 @@ def analyze_message(text: str, level: str = "normal", qr: list[str] | None = Non
     if url_results and len({a["categorie"] for a in alerts}) >= 2:
         score += 10
     score = int(min(100, score))
-    if any(a["id"] in ("donnees", "faux_conseiller", "rib", "acces_distance") for a in alerts):
+    if any(a["id"] in ("donnees", "faux_conseiller", "rib", "acces_distance", "proche") for a in alerts):
         score = max(score, 70)
     verdict = "arnaque" if score >= 60 else "suspect" if score >= 30 else "légitime"
 
