@@ -81,7 +81,7 @@ def enrich(base: dict, text: str, level: str) -> dict:
         if a.get("titre") and a["titre"].lower() not in known and a.get("gravite") in ("haute", "moyenne", "faible"):
             cit = a.get("citation", "")
             if cit and " ".join(cit.split())[:40].lower() not in " ".join(text.split()).lower():
-                cit = ""
+                continue
             res["alertes"].append({**a, "citation": cit, "source": "IA Mistral"})
     if mode == "contrat":
         for k, v in (out.get("chiffres") or {}).items():
